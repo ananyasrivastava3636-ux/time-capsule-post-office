@@ -1,0 +1,248 @@
+/*
+  ============================================================
+  style.css : how the Time Capsule Post Office LOOKS
+  ============================================================
+  index.html builds the page; this file decides colours, fonts,
+  spacing and (later) all the animations.
+  index.html loads this file with:  <link rel="stylesheet" href="style.css">
+
+  Stage 1 keeps the look simple on purpose. The full whimsical
+  design (envelopes, postbox, stamps, stickers) comes in Stage 3.
+*/
+
+
+/*
+  ===== CSS VARIABLES (your colour palette) =====
+  NEW CONCEPT: CSS variables
+  A variable is a named box that holds a value. You write the colour
+  ONCE here, then use it everywhere with var(--name).
+  Real-life example: it's like saving "Mum" in your phone contacts;
+  if her number changes, you update it once, not in every chat.
+
+  ":root" means "the whole page", so these work everywhere.
+
+  Palette: Pediment, Meadow Flower, Copper Moon, Blackberry.
+  Text rule: small text always uses Blackberry, because it's the
+  only colour dark enough to read easily on the light Pediment paper.
+*/
+:root {
+  --blackberry: #48192E;     /* headings, wax seals, primary buttons, ALL small text */
+  --meadow-flower: #957083;  /* accents, glow on ready letters, hover states */
+  --copper-moon: #C59C79;    /* postbox, soft sections, borders */
+  --pediment: #D3CBC4;       /* letter paper, envelopes, cards */
+
+  /* Fonts, stored as variables too, so you can swap them in one place. */
+  --font-handwritten: "Caveat", cursive;
+  --font-clean: "Nunito", sans-serif;
+}
+
+
+/*
+  ===== Box sizing =====
+  Makes width/height include padding and borders.
+  Without this, a "100% wide" box with padding would poke out of its parent.
+  "*" means "every element".
+*/
+* {
+  box-sizing: border-box;
+}
+
+
+/*
+  ===== The whole page =====
+  - The Van Gogh blossom painting fills the background.
+    "cover" stretches it to fill the screen while keeping its shape
+    (it crops the edges instead of squashing the picture).
+    "fixed" keeps it still while you scroll.
+  - Clean font and Blackberry text by default.
+*/
+body {
+  margin: 0;
+  padding: 16px;
+  font-family: var(--font-clean);
+  color: var(--blackberry);
+  line-height: 1.5;
+  background-color: var(--pediment);   /* shown while the picture is still loading */
+  background-image: url("assets/background.jpg");
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+}
+
+
+/*
+  ===== Page width =====
+  Phone-first: on a phone everything is full width.
+  On a laptop we stop things getting too wide (max 640px) and centre them.
+  "margin: auto" on left and right is the classic centring trick.
+*/
+header,
+main,
+footer {
+  max-width: 640px;
+  margin: 0 auto 16px auto;
+}
+
+
+/*
+  ===== Cards =====
+  Every piece of text sits on a Pediment "card", never directly on
+  the painting, so it's always easy to read.
+  border-radius rounds the corners; box-shadow adds a soft shadow.
+*/
+.card {
+  background-color: var(--pediment);
+  border: 2px solid var(--copper-moon);
+  border-radius: 18px;
+  padding: 20px;
+  margin-bottom: 16px;
+  box-shadow: 0 6px 18px rgba(72, 25, 46, 0.18); /* Blackberry, see-through */
+}
+
+
+/* ===== Headings use the handwritten font ===== */
+h1,
+h2,
+.dear-line {
+  font-family: var(--font-handwritten);
+  color: var(--blackberry);
+  margin: 0 0 8px 0;
+}
+
+h1 { font-size: 2.4rem; line-height: 1.1; }
+h2 { font-size: 2rem; }
+.dear-line { font-size: 1.8rem; }
+
+.tagline { margin: 0; }
+
+.site-header { text-align: center; }
+
+
+/* ===== Small text: labels, dates, notes ===== */
+.small-text {
+  font-size: 0.9rem;
+  color: var(--blackberry);
+}
+
+
+/*
+  ===== Form labels and boxes =====
+  "display: block" puts each label on its own line above its box.
+  width: 100% makes boxes fill the card on any screen size.
+  font-size 1rem (16px) on inputs stops iPhones auto-zooming when you tap.
+*/
+label {
+  display: block;
+  font-weight: 600;
+  margin: 12px 0 4px 0;
+}
+
+textarea,
+input[type="text"],
+input[type="date"] {
+  width: 100%;
+  padding: 10px 12px;
+  font-size: 1rem;
+  color: var(--blackberry);
+  background-color: var(--pediment);
+  border: 2px solid var(--copper-moon);
+  border-radius: 12px;
+}
+
+/* The letter text uses the handwritten font, so it feels like a real letter. */
+textarea {
+  font-family: var(--font-handwritten);
+  font-size: 1.4rem;
+  resize: vertical;   /* you can drag it taller, but not wider */
+}
+
+/* When you click into a box, its border turns Meadow Flower so you know where you are. */
+textarea:focus,
+input:focus {
+  outline: none;
+  border-color: var(--meadow-flower);
+}
+
+
+/* ===== The "When should it open?" group ===== */
+fieldset {
+  border: 2px dashed var(--copper-moon);
+  border-radius: 14px;
+  margin: 16px 0;
+  padding: 8px 16px 16px 16px;
+}
+
+legend {
+  font-weight: 700;
+  padding: 0 6px;
+}
+
+/* Each radio choice sits on its own line, with normal (not bold) text. */
+.choice {
+  font-weight: 400;
+  margin: 6px 0;
+  cursor: pointer;
+}
+
+/* Makes radio dots Blackberry instead of the browser's default blue. */
+input[type="radio"] {
+  accent-color: var(--blackberry);
+}
+
+
+/*
+  ===== The main button =====
+  Blackberry background with Pediment text = very easy to read.
+  "transition" makes the hover change happen smoothly over 0.3s
+  instead of snapping instantly.
+*/
+.primary-button {
+  display: block;
+  width: 100%;
+  margin-top: 16px;
+  padding: 14px;
+  font-family: var(--font-clean);
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--pediment);
+  background-color: var(--blackberry);
+  border: none;
+  border-radius: 999px;   /* a huge number = fully round ends, like a pill */
+  cursor: pointer;
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+/* On hover (mouse over it), a Meadow Flower glow appears and the button lifts slightly. */
+.primary-button:hover {
+  box-shadow: 0 0 0 4px var(--meadow-flower);
+  transform: translateY(-2px);
+}
+
+
+/* ===== The plain list of saved letters ===== */
+#letters-list {
+  list-style: none;   /* removes the bullet dots */
+  padding: 0;
+  margin: 0;
+}
+
+/* Each saved letter gets its own little bordered box. */
+.letter-item {
+  border-top: 2px dashed var(--copper-moon);
+  padding: 12px 0;
+}
+
+.letter-item p {
+  margin: 4px 0;
+}
+
+/* Keeps line breaks you typed in your letter, and uses the handwritten font. */
+.letter-body {
+  white-space: pre-wrap;
+  font-family: var(--font-handwritten);
+  font-size: 1.3rem;
+}
+
+.save-note {
+  font-style: italic;
+}

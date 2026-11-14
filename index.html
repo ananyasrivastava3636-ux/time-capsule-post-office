@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<!--
+  ============================================================
+  index.html : the STRUCTURE of the Time Capsule Post Office
+  ============================================================
+  This file says WHAT is on the page: headings, the letter form,
+  buttons, and an empty box where saved letters will appear.
+
+  It does not decide how things LOOK (that's style.css) or what
+  happens when you click things (that's script.js).
+  Think of it like a house:
+    index.html = the walls and rooms
+    style.css  = the paint and furniture
+    script.js  = the electricity (lights turn on when you flip a switch)
+
+  The two files are connected at the bottom of <head> (style.css)
+  and the bottom of <body> (script.js).
+-->
+<html lang="en">
+<head>
+  <!-- Tells the browser which letters/emojis to use. UTF-8 covers every language and emoji 💌 -->
+  <meta charset="UTF-8">
+
+  <!-- Makes the page fit phone screens properly instead of looking zoomed out and tiny. -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- The text shown on the browser tab. -->
+  <title>Time Capsule Post Office 💌</title>
+
+  <!--
+    Google Fonts: we borrow two free fonts from Google.
+    - "Caveat" looks handwritten (for letters and headings).
+    - "Nunito" is clean and easy to read (for buttons and labels).
+    The "preconnect" lines just tell the browser to start talking
+    to Google's servers early, so the fonts load a bit faster.
+  -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <!-- Connects our own stylesheet (the "paint"). -->
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <!-- ===== Page header: the title of the site ===== -->
+  <header class="card site-header">
+    <h1>Time Capsule Post Office</h1>
+    <p class="tagline">Write a letter today. Open it someday. 💌</p>
+  </header>
+
+  <main>
+
+    <!--
+      ===== The "Write a letter" section =====
+      A <form> groups all the boxes you type into, plus the Seal button.
+      Each <label> is the little text that says what a box is for.
+      The "for" on a label matches the "id" on its box, so tapping
+      the label also puts your cursor in the box (handy on phones).
+    -->
+    <section class="card letter-paper" aria-labelledby="write-heading">
+      <h2 id="write-heading">Write a letter</h2>
+
+      <form id="letter-form">
+
+        <!-- "Dear Future Me" is fixed text, so it's just a heading, not a box. -->
+        <p class="dear-line">Dear Future Me,</p>
+
+        <!-- The big box for the letter itself. "required" means the form won't submit if it's empty. -->
+        <label for="letter-text">Your letter</label>
+        <textarea id="letter-text" rows="8" required
+                  placeholder="Today I'm feeling... I hope you remember..."></textarea>
+
+        <!-- Your name, to sign off the letter. -->
+        <label for="writer-name">Signed,</label>
+        <input id="writer-name" type="text" required placeholder="Your name">
+
+        <!--
+          ===== Choosing when the letter opens =====
+          A <fieldset> groups related choices; <legend> is its title.
+          Radio buttons share the same "name" so only ONE can be picked.
+          The "value" is what script.js reads to know which you chose.
+        -->
+        <fieldset class="open-options">
+          <legend>When should it open?</legend>
+
+          <label class="choice"><input type="radio" name="open-in" value="1-week" checked> In 1 week</label>
+          <label class="choice"><input type="radio" name="open-in" value="1-month"> In 1 month</label>
+          <label class="choice"><input type="radio" name="open-in" value="6-months"> In 6 months</label>
+          <label class="choice"><input type="radio" name="open-in" value="1-year"> In 1 year</label>
+          <label class="choice"><input type="radio" name="open-in" value="birthday"> On my next birthday</label>
+          <label class="choice"><input type="radio" name="open-in" value="custom"> Pick a date</label>
+
+          <!--
+            These two date boxes start hidden (the "hidden" attribute).
+            script.js shows the right one only when you pick
+            "On my next birthday" or "Pick a date".
+          -->
+          <div id="birthday-box" class="extra-date" hidden>
+            <label for="birthday-date">Your birthday (any year is fine)</label>
+            <input id="birthday-date" type="date">
+          </div>
+
+          <div id="custom-box" class="extra-date" hidden>
+            <label for="custom-date">Open on</label>
+            <input id="custom-date" type="date">
+          </div>
+        </fieldset>
+
+        <!-- Shows the exact opening date before you seal, so there are no surprises. -->
+        <p id="open-preview" class="small-text"></p>
+
+        <!-- The main button. type="submit" means clicking it "submits" (sends) the form. -->
+        <button type="submit" class="primary-button">Seal it 💌</button>
+
+        <!-- An empty spot where script.js writes a friendly message, like "Sealed!" or an error. -->
+        <p id="form-message" class="small-text" role="status"></p>
+      </form>
+    </section>
+
+    <!--
+      ===== The list of saved letters =====
+      Right now this is a plain list. In later stages it becomes
+      the cute postbox full of envelopes.
+      The <ul> starts EMPTY: script.js fills it with letters.
+    -->
+    <section class="card" aria-labelledby="saved-heading">
+      <h2 id="saved-heading">My sealed letters</h2>
+
+      <!-- The gentle storage note you asked for. -->
+      <p class="small-text save-note">
+        Your letters are saved only on this device and browser. Use Export to keep a backup 💌
+      </p>
+
+      <ul id="letters-list"></ul>
+    </section>
+
+  </main>
+
+  <!-- ===== Footer. Credits arrive in Stage 5. ===== -->
+  <footer class="card small-text">
+    Made with love (and a little patience) 🌙
+  </footer>
+
+  <!--
+    Connects our JavaScript (the "electricity").
+    It goes at the very END of <body> so that every box and button
+    above already exists by the time the script looks for them.
+  -->
+  <script src="script.js"></script>
+</body>
+</html>
